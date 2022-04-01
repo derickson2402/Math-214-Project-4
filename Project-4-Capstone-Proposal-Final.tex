@@ -42,11 +42,11 @@
 \begin{document}
 \maketitle
 
-These days, it is commonplace to share hundreds if not thousands of pictures over the internet each day, whether through social media, Zoom calls, or sharing spring break pictures with family. Storing and sending this many images takes a lot of storage and internet bandwidth, it is hugely important to reduce the original size of digital images in a way that retains as much detail as possible. We will explore the application of Linear Algebra in digital image compression, specifically the methods using wavelet-based algorithms. Our goal is to look at how the JPEG-2000 compression standard is implemented, why it performs better than older standards especially at higher compression ratios, and how the process could potentially be improved.
+An estimated $ 58\% $ of the $786$ Tbps of global internet traffic is dedicated to video streaming. Each still image in a video stream must have its data copmressed to save space; it would cost in the ballpark of several hundred trillion USD to build the infrastructure for uncompressed video streaming. We will explore the application of Linear Algebra in digital image compression, specifically using wavelet-based algorithms. Our goal is to look at how the JPEG-2000 compression standard is implemented, why it performs better than older standards especially at higher compression ratios, and how the process could potentially be improved.
 
 \section{Introduction of Topic}
 
-For the past 30 years, The JPEG image compression standard has been the gold standard for digital images. Eight years after its release, the JPEG-2000 standard was released. It uses wavelet transformation compression rather than discrete cosine transformation, which allows it to achieve much more efficient compression without losing as much perceivable detail. This means that end users can store and transport more images, while keeping them at a higher quality.
+For the past 30 years, JPEG image compression has been used worldwide for compressing and storing images. Eight years after its release, the JPEG-2000 standard was developed. It uses wavelet transformation rather than discrete cosine transformation to compress images. This allows it to achieve much more efficient compression without losing as much perceivable detail, especially at high compression ratios. This means that end users can store and transport more images at a higher quality.
 
 Wavelet image compression utilizes a type of Fourier transformation to reduce the image to a series of basis functions. The original image can be created by simply summing all of the functions together. This process is essentially a two-dimensional version of the Fourier transformations often used in audio signal spectrograms. With the image collapsed into a series of functions, any functions deemed low cost functions (as determined by the compression level and the image itself) can be thrown out in order to reduce the total amount of data without greatly affecting the original image. The image is then reconstructed, and even compression levels of $ 90\% $ or higher will not alter the image enough for a human to perceive the difference.
 
@@ -56,7 +56,7 @@ There are dozens of whitepapers and technical documents about wavelet compressio
 
 We will be harnessing the numpy and matplotlib libraries with Python 3 for our computation. The matplotlib library contains many tools for dealing with images, including performing two dimensional Fourier transforms. These tools will allow us to easily demo every step of the image compression process.
 
-Normal images are stored as three seperate layers for red, green, and blue pixels, but for simplicity we will use Python to convert the image to grayscale. This way we only have one image layer to deal with. We are assuming that the general process is the same for color images but the calculations are just performed three times.
+Normal images are stored as three separate layers for red, green, and blue pixels, but for simplicity we will use Python to convert the image to grayscale. This way we only have one image layer to deal with. We are assuming that the general process is the same for color images but the calculations are just performed three times.
 
 We are also making two other assumptions. We assume that this algorithm can be applied to computer generated images, as these will have sharper lines and details which might not translate easily to our wave functions. We are also assuming that the pixel cost algorithm, which analyzes the patterns of quick changes in light intensity, handles all colors, lighting conditions, and resolutions correctly. If the algorithm were to perform worse for any of these categories, then images of certain subjects would not be compressed well and would end up distorted.
 
@@ -75,8 +75,8 @@ We have a very strong programming, mathematics, and data analysis background:
 	\item Dan Erickson: Sophomore in Computer Science Engineering, experience with numpy and MatLAB with image manipulation.
 	\item Jessica Zhu: Junior in Computer Science Engineering, Minor image manipulation experience from EECS 280 assignment. 
 	\item Ibrahim Alnassar: Sophomore in Computer Science Engineering, basic experience with Python, image manipulation, and image classification.
-	\item Tim Sawyer:
-	\item Josh Richman:
+	\item Tim Sawyer: Sophomor in Industrial and Operations Engineering, basic Python and MatLAB experience.
+	\item Josh Richman: Sophomore in Data Science Engineering, basic Python and image manipulation experience.
 \end{itemize}
 
 We all have very busy lives and will have other final projects and exams due around the same time as this project. Therefore, we will aim to complete our poster a week early. We will likely not completely finish by then, but we will have the majority done so we can focus on exams.
