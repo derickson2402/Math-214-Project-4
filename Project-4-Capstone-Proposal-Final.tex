@@ -21,7 +21,7 @@
 
 % Configure graphicx package
 \usepackage{graphicx, blindtext, float}
-\graphicspath{ {./images/} }
+\graphicspath{ {./Images/} }
 \setlength{\parskip}{0pt}
 
 \newenvironment{answer} {
@@ -52,26 +52,44 @@ Wavelet image compression utilizes a type of Fourier transformation to reduce th
 
 There are dozens of whitepapers and technical documents about wavelet compression, not to mention the original JPEG-2000 specification. However, these are not very interesting, so we will rely on a video series on YouTube by Steve Brunton from the University of Washington for learning about this topic. The video series can be found at this link \url{https://youtube.com/playlist?list=PLMrJAkhIeNNT_Xh3Oy0Y4LTj0Oxo8GqsC} and the relevant videos start at "Wavelets and Multiresolution Analysis".
 
-\section{Data Collection}
+\section{Data Collection and Methodology}
 
-% TODO: What data will you use?
+We will be harnessing the numpy and matplotlib libraries with Python 3 for our computation. The matplotlib library contains many tools for dealing with images, including performing two dimensional Fourier transforms. These tools will allow us to easily demo every step of the image compression process.
+
+Normal images are stored as three seperate layers for red, green, and blue pixels, but for simplicity we will use Python to convert the image to grayscale. This way we only have one image layer to deal with. We are assuming that the general process is the same for color images but the calculations are just performed three times.
+
+We are also making two other assumptions. We assume that this algorithm can be applied to computer generated images, as these will have sharper lines and details which might not translate easily to our wave functions. We are also assuming that the pixel cost algorithm, which analyzes the patterns of quick changes in light intensity, handles all colors, lighting conditions, and resolutions correctly. If the algorithm were to perform worse for any of these categories, then images of certain subjects would not be compressed well and would end up distorted.
+
+For the actual images, we thought it would be creative to use the horse picture from EECS 280 Project 2. The project deals with "smart cropping" images, where slices of the image are chosen for removal based on a "weight" such that the most important sections of the image are preserved. The image is included below for reference. We will be converting the image to grayscale within Python so that we only have to deal with one image layer rather than three.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=10cm]{horses.png}
+\end{figure}
 
 \section{Project Management}
 
-Our group consists of the following members:
+We have a very strong programming, mathematics, and data analysis background:
 
-\begin{list}{}{}
-	\item Dan Erickson - danerick - Computer Science Engineering
-	\item Jessica Zhu - jesszhu - Computer Science Engineering
-	\item Ibrahim Alnassar - alnassar - Computer Science Engineering
-	\item Tim Sawyer - tisawyer - Industrial and Operations Engineering
-	\item Josh Richman - richmajo - Data Science Engineering
-\end{list}
+\begin{itemize}
+	\item Dan Erickson: Sophomore in Computer Science Engineering, experience with numpy and MatLAB with image manipulation.
+	\item Jessica Zhu: Junior in Computer Science Engineering, Minor image manipulation experience from EECS 280 assignment. 
+	\item Ibrahim Alnassar: Sophomore in Computer Science Engineering, basic experience with Python, image manipulation, and image classification.
+	\item Tim Sawyer:
+	\item Josh Richman:
+\end{itemize}
 
-We have a very strong programming, mathematics, and data analysis background.
+We all have very busy lives and will have other final projects and exams due around the same time as this project. Therefore, we will aim to complete our poster a week early. We will likely not completely finish by then, but we will have the majority done so we can focus on exams.
 
-% TODO: What background and skills will each team member bring to the project?
+Tasks:
+\begin{enumerate}
+	\item Analyze real world uses for wavelet compressions.
+	\item Write out section explaining the math of wavelet compressions and how it connects with the class.
+	\item Write Python code to carry out wavelet compressions and perform wavelet compressions of black and white images.
+	\item Analyze the compressed images and the implications and uses.
+	\item Put together the poster.
+\end{enumerate}
 
-We all have very busy lives and will have other final projects and exams due around the same time as this project. Therefore, we will aim to complete our poster a week early. We will probably not completely finish by then, but we will have the majority done so we can focus on exams.
+We will divide work into a group focused on tasks 1 and 2 and a group focused on tasks 3 and 4. Everyone will work together on the poster. The group focusing on tasks 1 and 2 will consist of Jessica, Ibrahim, and Tim. The other group will consist of Dan and Josh.
 
 \end{document}
