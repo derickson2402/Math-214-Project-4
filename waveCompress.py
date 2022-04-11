@@ -15,22 +15,34 @@ plt.rcParams.update({'font.size': 18})
 imageIn = imread(input("Enter the input filename: "))
 fileNameOut = input("Save to filename: ")
 decompLevel = int(input("How many levels of decomposition: "))
-image = np.mean(imageIn, -1)
+imageGray = np.mean(imageIn, -1)
+imageR = imageIn[:, :, 0]
+imageG = imageIn[:, :, 1]
+imageB = imageIn[:, :, 2]
 
 # Perform 2 levels of wavelet decomposition
 motherWave = 'db1'
-coeffs = pywt.wavedec2(image, wavelet=motherWave, level=decompLevel)
+coeffsGray = pywt.wavedec2(imageGray, wavelet=motherWave, level=decompLevel)
+coeffsR = pywt.wavedec2(imageR, wavelet=motherWave, level=decompLevel)
+coeffsG = pywt.wavedec2(imageG, wavelet=motherWave, level=decompLevel)
+coeffsB = pywt.wavedec2(imageB, wavelet=motherWave, level=decompLevel)
 
 # Normalize the coefficient arrays on each decomp layer
-coeffs[0] /= np.abs(coeffs[0]).max()
-for layer in range(decompLevel) :
-	coeffs[layer + 1] = [d/np.abs(d).max() for d in coeffs[layer + 1]]
+for coeffs in [ coeffsGray, coeffsR, coeffsG, coeffsB ] :
+	coeffs[0] /= np.abs(coeffs[0]).max()
+	for layer in range(decompLevel) :
+		coeffs[layer + 1] = [d/np.abs(d).max() for d in coeffs[layer + 1]]
 
-arr, coeffSlices = pywt.coeffs_to_array(coeffs)
+arrGray, coeffSlicesGray = pywt.coeffs_to_array(coeffsGray)
+arrR, coeffSlicesR = pywt.coeffs_to_array(coeffsR)
+arrG, coeffSlicesG = pywt.coeffs_to_array(coeffsG)
+arrB, coeffSlicesB = pywt.coeffs_to_array(coeffsB)
 
 # Render our grid image, with base waves big on bottom and higher layers
 # smaller on top
-plt.imshow(arr,cmap='gray_r',vmin=-0.25,vmax=0.75)
+# plt.imshow(arrGray,cmap='gray_r',vmin=-0.25,vmax=0.75)
+plt.imshow(np.dstack((arrR, arrG, arrB)))
+
 # figure = plt.figure(figsize=(18, 16))
 plt.show()
 
