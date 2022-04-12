@@ -8,10 +8,9 @@ import os
 import pywt
 
 # Read in our file names and generate a matrix from the image
-# imageIn = imread(input("Enter the input filename: "))
-# decompLevel = int(input("How many levels of decomposition: "))
-imageIn = imread("Images/horses.png")
-decompLevel = 2
+imageIn = imread(input("Enter the input filename: "))
+imageOutName = input("Enter the save filename: ")
+decompLevel = int(input("How many levels of decomposition: "))
 imageR = imageIn[:, :, 0]
 imageG = imageIn[:, :, 1]
 imageB = imageIn[:, :, 2]
@@ -37,7 +36,6 @@ arrB, coeffSlicesB = pywt.coeffs_to_array(coeffsB)
 # plt.imshow(arrGray,cmap='gray_r',vmin=-0.25,vmax=0.75)
 # Set up our pretty output
 plt.rcParams['figure.figsize'] = [16, 16]
-plt.rcParams.update({'font.size': 18})
 plt.imshow(np.dstack((arrR, arrG, arrB)))
 plt.show()
 
@@ -47,20 +45,29 @@ coeffsGray = pywt.wavedec2(imageGray, wavelet=motherWave, level=4)
 arrGray, coeffSlicesGray = pywt.coeffs_to_array(coeffsGray)
 coeffSorted = np.sort(np.abs(arrGray.reshape(-1)))
 
+# Make our output nice and pretty
+fig = plt.figure(figsize=(8.5, 11))
+fig.add_subplot(3, 2, 1)
+plt.axis('off')
+plt.title("Original")
+plt.imshow(imageGray, cmap='gray')
+
 # Loop through all the compression ratios we want and print them out
-for percent in [ 0.1, 0.05, 0.01, 0.005 ] :
-	threshold = coeffSorted[int(np.floor((1-percent)*len(coeffSorted)))]
+kept = [ 0.25, 0.1, 0.075, 0.05, 0.025 ]
+for plot in range(5) :
+	fig.add_subplot(3, 2, plot+2)
+	threshold = coeffSorted[int(np.floor((1-kept[plot])*len(coeffSorted)))]
 	ind = np.abs(arrGray) > threshold
 	filtered = arrGray * ind
 	coeffFiltered = pywt.array_to_coeffs(filtered, coeffSlicesGray, output_format='wavedec2')
 
 	# Rebuild the original image from the specified number of coefficients
 	reconstruction = pywt.waverec2(coeffFiltered, wavelet=motherWave)
-	plt.figure()
-	plt.imshow(reconstruction, cmap='gray')
+	# plt.figure()
 	plt.axis('off')
-	plt.rcParams['figure.figsize'] = [8, 8]
-	plt.rcParams.update({'font.size': 18})
-	plt.title('Compression Ratio = 1:' + str(1.0 / percent))
-	plt.show()
-
+	# plt.rcParams['figure.figsize'] = [8, 8]
+	# plt.rcParams.update({'font.size': 18})
+	plt.title('Coefficients kept: ' + str(100*kept[plot]) + '%')
+	plt.imshow(reconstruction, cmap='gray')
+fig.tight_layout()
+fig.savefig(imageOutName)
