@@ -53,7 +53,7 @@ plt.title("Original")
 plt.imshow(imageGray, cmap='gray')
 
 # Loop through all the compression ratios we want and print them out
-kept = [ 0.25, 0.1, 0.075, 0.05, 0.025 ]
+kept = [ 0.1, 0.05, 0.01, 0.005, 0.001 ]
 for plot in range(5) :
 	fig.add_subplot(3, 2, plot+2)
 	threshold = coeffSorted[int(np.floor((1-kept[plot])*len(coeffSorted)))]
