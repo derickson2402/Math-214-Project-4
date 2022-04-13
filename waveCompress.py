@@ -1,4 +1,29 @@
 #!python3
+'''#############################################################################
+
+Date
+	19 April 2022
+
+Written By
+	Dan Erickson (danerick)
+	Josh Richman (richmajo)
+
+Course
+	Math 214 Linear Algebra
+
+Description
+	Image processing script for Capstone Project. Performs 2D wavelet
+	transformation on an image, and saves both a composite image showing the
+	wavelet layers and a side-by-side comparison image showing the image
+	compressed to multiple levels.
+
+	This code is modified from:
+	https://github.com/dynamicslab/databook_python
+
+	This code can be accessed at:
+	https://github.com/derickson2402/Math-214-Project-4.git
+
+#############################################################################'''
 
 # You will need to pip install PyWavelets (and possibly numpy and matplotlib)
 from matplotlib.image import imread
@@ -9,7 +34,8 @@ import pywt
 
 # Read in our file names and generate a matrix from the image
 imageIn = imread(input("Enter the input filename: "))
-imageOutName = input("Enter the save filename: ")
+imageOutCompositeName = input("Enter the save filename for composite: ")
+imageOutSideName = input("Enter the save filename for side-by-side: ")
 decompLevel = int(input("How many levels of decomposition: "))
 imageR = imageIn[:, :, 0]
 imageG = imageIn[:, :, 1]
@@ -35,9 +61,12 @@ arrB, coeffSlicesB = pywt.coeffs_to_array(coeffsB)
 # smaller on top
 # plt.imshow(arrGray,cmap='gray_r',vmin=-0.25,vmax=0.75)
 # Set up our pretty output
+fig = plt.figure(figsize=(8.5, 11))
+plt.axis('off')
+plt.title("Wavelets Composing Original Image")
 plt.rcParams['figure.figsize'] = [16, 16]
 plt.imshow(np.dstack((arrR, arrG, arrB)))
-plt.show()
+fig.savefig(imageOutCompositeName)
 
 # Render multiple compression levels for comparison
 imageGray = np.mean(imageIn, -1)
@@ -50,10 +79,10 @@ fig = plt.figure(figsize=(8.5, 11))
 fig.add_subplot(3, 2, 1)
 plt.axis('off')
 plt.title("Original")
-plt.imshow(imageGray, cmap='gray')
+plt.imshow(imageGray, cmap='gray_r', vmin=-0.25, vmax=0.75)
 
 # Loop through all the compression ratios we want and print them out
-kept = [ 0.1, 0.05, 0.01, 0.005, 0.001 ]
+kept = [ 0.1, 0.01, 0.005, 0.0025, 0.0015 ]
 for plot in range(5) :
 	fig.add_subplot(3, 2, plot+2)
 	threshold = coeffSorted[int(np.floor((1-kept[plot])*len(coeffSorted)))]
@@ -70,4 +99,4 @@ for plot in range(5) :
 	plt.title('Coefficients kept: ' + str(100*kept[plot]) + '%')
 	plt.imshow(reconstruction, cmap='gray')
 fig.tight_layout()
-fig.savefig(imageOutName)
+fig.savefig(imageOutSideName)
