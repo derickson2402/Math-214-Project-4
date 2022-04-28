@@ -1,8 +1,8 @@
-# Math 214 Project 3 - Least Squares Data Fitting
+# Math 214 Capstone Project - Discrete Wavelet Image Compression
 
 This repository can be accessed at [derickson2402/Math-214-Project-4](https://github.com/derickson2402/Math-214-Project-4).
 
-The corresponding project submission folder can be found on [Google Drive](https://drive.google.com/drive/folders/101TKrL5bowXI4936esbKiX3jzUG4AdG8?usp=sharing).
+The corresponding project submission folder can be found on [Google Drive](https://drive.google.com/drive/folders/101TKrL5bowXI4936esbKiX3jzUG4AdG8?usp=sharing). If the link is no longer valid, you can send an [email to one of the authors](mailto:derickson2402@gmail.com) and we would be happy to show off our work!
 
 ## Python Setup Instructions
 
